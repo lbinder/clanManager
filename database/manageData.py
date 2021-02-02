@@ -49,9 +49,6 @@ def track_war(war, db):
     members = war['clan']['members']
     enemy_tag = war['opponent']['tag']
     for member in members:
-        if (member['name'] == 'Sire'):
-            print(member['attacks'])
-            print("-"*10)
         values = parse_values(member)
         if (values != None):
             db.update_attacks(values, enemy_tag+member['tag'])

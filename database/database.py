@@ -53,5 +53,3 @@ class DataBase:
             return False
         else:
             return True
-        
-    
