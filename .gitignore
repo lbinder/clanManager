@@ -1,2 +1,2 @@
-/data/tokens/private.py
 /**/*.pyc
+/database/tokens/private.py
