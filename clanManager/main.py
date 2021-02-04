@@ -20,7 +20,7 @@ def index():
 def main():
     running = True
     war_manager = Process(target=manageData.manage_wars)
-    while running:
+   """ while running:
         user_input = input(": ")
         if (user_input == 'start'):
             war_manager.start()
@@ -28,7 +28,8 @@ def main():
             war_manager.terminate()
             print("Clan Manager Shutdown")
             running = False
-    #app.run(debug=True, port=80, host='0.0.0.0')
+    """
+    app.run(debug=True, port=80, host='0.0.0.0')
 
 if __name__ == "__main__":
     main()
