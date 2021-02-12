@@ -1,2 +1,2 @@
-/clanManager/database/tokens/private.py
 /**/*.pyc
+clanManager/database/tokens/private.py

@@ -41,6 +41,10 @@ class DataBase:
         query = "INSERT INTO members (tag, name, joined) VALUES (%s, %s, %s)"
         self.execute(query, values)
 
+    def insert_into_members(self, values):
+        query = "INSERT INTO members (tag, name, dateJoined) VALUES (%s, %s, %s)"
+        self.execute(query, values)
+
     def update_attacks(self, values, id):
             query = "UPDATE wars SET attackOneUsed = %s, attackOneStars = %s, attackOneDestruction = %s, attackTwoUsed = %s, attackTwoStars = %s, attackTwoDestruction = %s WHERE attackID = %s"
             self.execute(query, values+[id])
@@ -76,3 +80,4 @@ class DataBase:
         results = cursor.fetchall()
         cursor.close()
         return results
+

@@ -9,6 +9,7 @@ def track_members():
     while True:
         update_members(db, members)
 
+
 def update_members(db, members):
     for member in members['items']:
             if (not db.entry_exists_members(member['tag'])):
