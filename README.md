@@ -6,9 +6,6 @@ Keep track of member's war participation:
 Other basic info on members is tracked such as:
     * Name
     * Rank
-    * Total donations given/received
     * Date they joined the clan
 
-Extras:
-    * Average points per clan games
-    * CWL performance
+All is displayed on a locally hosted webpage.

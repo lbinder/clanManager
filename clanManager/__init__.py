@@ -9,7 +9,8 @@ app = Flask(__name__)
 def index():
     db = database.DataBase()
     members = db.get_members()
-    data = collect_member_info(members, db)
+    data = sorted(collect_member_info(members, db), key = lambda i: (i['part_war'], i['star_avg'], i['dest_avg']), reverse=True)
+    
     print(data)
     return render_template('index.html', data=data)
 
@@ -22,7 +23,7 @@ def collect_member_info(members, db):
         war_stats = calculate_war_stats(war_data)
         clan_info.append({'name': member[1],
                           'joined': member[2],
-                          'part_war': war_stats['participation'],
+                          'part_war': war_stats['participation'] * 100,
                           'star_avg': war_stats['average_stars'],
                           'dest_avg': war_stats['average_destruction']})
     
