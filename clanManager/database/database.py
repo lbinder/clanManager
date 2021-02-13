@@ -1,7 +1,10 @@
 import mysql.connector
 
 from mysql.connector import errorcode
-from database.tokens import private
+try:
+    from clanManager.database.tokens import private
+except:
+    from database.tokens import private
 
 class DataBase:
     connection = None
@@ -75,6 +78,14 @@ class DataBase:
 
     def get_members_war_attacks(self, tag):
         query = "SELECT * FROM wars WHERE attackId LIKE '%" + tag + "'"
+        cursor = self.connection.cursor()
+        cursor.execute(query)
+        results = cursor.fetchall()
+        cursor.close()
+        return results
+
+    def get_members(self):
+        query = "SELECT * FROM members"
         cursor = self.connection.cursor()
         cursor.execute(query)
         results = cursor.fetchall()

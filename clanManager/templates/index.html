@@ -1,1 +1,32 @@
-<h1>TeamFam</h2>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TeamFam</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="" crossorigin="anonymous">
+
+</head>
+<body>
+            <table class="table table-striped table-dark">
+                <thead>
+                  <tr>
+                    <th style="text-align:center" scope="col">Name</th>
+                    <th style="text-align:center" scope="col">Date Joined</th>
+                    <th style="text-align:center" scope="col">War Participation</th>
+                    <th style="text-align:center" scope="col">Average Stars</th>
+                    <th style="text-align:center" scope="col">Average Destruction</th>
+                  </tr>
+                </thead>
+                <tbody >
+                    {% for row in data %} 
+                    <tr>
+                        <td style="text-align:center">{{row['name']}}</td>
+                        <td style="text-align:center">{{row['joined']}}</td>
+                        <td style="text-align:center">{{row['part_war']}}</td>
+                        <td style="text-align:center">{{row['star_avg']}}</td>
+                        <td style="text-align:center">{{row['dest_avg']}}</td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+</body>
