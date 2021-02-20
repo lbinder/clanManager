@@ -23,9 +23,9 @@ def collect_member_info(members, db):
         war_stats = calculate_war_stats(war_data)
         clan_info.append({'name': member[1],
                           'joined': member[2],
-                          'part_war': war_stats['participation'] * 100,
-                          'star_avg': war_stats['average_stars'],
-                          'dest_avg': war_stats['average_destruction']})
+                          'part_war': round(war_stats['participation'] * 100, 2),
+                          'star_avg': round(war_stats['average_stars'], 2),
+                          'dest_avg': round(war_stats['average_destruction'], 2)})
     
     return clan_info
         
