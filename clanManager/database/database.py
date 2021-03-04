@@ -45,7 +45,7 @@ class DataBase:
         self.execute(query, values)
 
     def insert_into_members(self, values):
-        query = "INSERT INTO members (tag, name, dateJoined) VALUES (%s, %s, %s)"
+        query = "INSERT INTO members (tag, name, joined) VALUES (%s, %s, %s)"
         self.execute(query, values)
 
     def update_attacks(self, values, id):
