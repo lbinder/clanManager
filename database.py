@@ -19,7 +19,7 @@ class Database:
                 print(e)
     
 
-    def run_query(self, query):
+    def run_query_for_results(self, query):
         """ Runs a query
         Args:
             query: a string that contains the query to run
@@ -32,11 +32,22 @@ class Database:
         try:
             cursor.execute(query)
             results = cursor.fetchall()
+            return results
         except mysql.connector.Error as e:
             print(e)
             return None
         finally:
             cursor.close()
+
+    
+    def run_query(self, query, values):
+        cursor = self.connection.cursor()
+        if (values == None):
+            cursor.execute(query)
+        else:
+            cursor.execute(query, values)
+        self.connection.commit()
+        cursor.close()
 
 
     def insert_into_members(self, values):
@@ -49,12 +60,20 @@ class Database:
         mysql.connector.Error: if the member cannot be added to the member table
 
         """
-        query = "INSERT INTO members (tag, name, joined) VALUES (%s, %s, %s)"
+        query = "INSERT INTO members (tag, name, date) VALUES (%s, %s, %s)"
         try:
-            self.execute(query, values)
+            self.run_query(query, values)
         except mysql.connector.Error as e:
             print(e)
     
+    
+    def delete_from_members(self, tag):
+        query = "DELETE FROM members WHERE tag = '" + tag + "'"
+        try:
+            self.run_query(query, None)
+        except mysql.connector.Error as e:
+            print(e)
+
 
     def get_members_table(self):
         """Get the data stored in the members table
@@ -62,7 +81,7 @@ class Database:
             A dictionary containing all rows in the members table or None on failure
         """
         query = "SELECT * FROM members"
-        return run_query(query)
+        return self.run_query_for_results(query)
 
 
     def insert_into_wars(self, values):
@@ -77,7 +96,7 @@ class Database:
         """
         query = "INSERT INTO wars (attackId, name, attackOneUsed, attackOneStars, attackOneDestruction, attackTwoUsed, attackTwoStars, attackTwoDestruction) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
         try:
-            self.execute(query, values)
+            self.run_query(query, None)
         except mysql.connector.Error as e:
             print(e)
         
@@ -90,7 +109,7 @@ class Database:
             dictionary containing the war stats of a member.
         """
         query = "SELECT * FROM wars WHERE attackId LIKE '%" + tag + "'"
-        return run_query(query)
+        return self.run_query_for_results(query)
 
     
         
