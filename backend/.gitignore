@@ -1,9 +1,3 @@
-/**/*.pyc
-clanManager/database/tokens/private.py
-secret
-secret/config.py
-__pycache__/
-oldProject/
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*

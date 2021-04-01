@@ -3,10 +3,11 @@ import sys
 from flask import Flask
 from flask_restplus import Resource, Api
 from multiprocessing import Process
-from database import Database
-from trackMembers import track_members
+from database.database import Database
+from trackers.trackMembers import track_members
 
 db = Database()
+
 application = Flask(__name__)
 api = Api(application,
           version='0.1',
@@ -15,7 +16,7 @@ api = Api(application,
 )
 
 @api.route('/members')
-class WarStats(Resource):
+class Members(Resource):
     def get(self):
         return db.get_members_table()
 

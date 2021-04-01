@@ -1,5 +1,6 @@
 import requests
-import config
+
+from secret import config
 
 
 def get_clan_members():

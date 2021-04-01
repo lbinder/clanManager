@@ -1,6 +1,7 @@
 import mysql.connector
-import config
+import os
 
+from secret import config
 from mysql.connector import errorcode
 
 
@@ -9,7 +10,7 @@ class Database:
 
     def __init__(self):
         try:
-            self.connection = mysql.connector.connect(**config.config)
+            self.connection = mysql.connector.connect(**config.database_config)
         except mysql.connector.Error as e:
             if e.errno == errorcode.ER_ACCESS_DENIED_ERROR:
                 print("Error with username or password")

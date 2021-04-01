@@ -1,15 +1,15 @@
 import time
-import getData
 
+from clashOfClansApi import getClashData
 from datetime import date
-from database import Database
+from database.database import Database
 
 
 db = Database()
 
 
 def track_members():
-    """Controls member tracking
+    """Checks to see if new members should be added or removed every 10 seconds
     """
     members_tracked = db.get_members_table()
     tags_in_db = parse_tags(members_tracked)
@@ -26,7 +26,7 @@ def update_members(tags_in_db):
     Returns:
         an updated list of tags that reflect any changes made to the database
     """
-    current_members = getData.get_clan_members()
+    current_members = getClashData.get_clan_members()
     current_tags = []
     
     for member in current_members['items']:
@@ -49,7 +49,6 @@ def add_members(member, tags_in_db):
     if (len(tags_in_db) == 0 or member['tag'] not in tags_in_db):
             values = [member['tag'], member['name'], date.today()]
             db.insert_into_members(values)
-            updated_tags.append(member['tag'])
 
 
 def delete_members(current_tags, tags_in_db):
