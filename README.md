@@ -1,3 +1,2 @@
-RESTful backend for clan manager.
-
-Currently tracks which members are in a given clan.
+A web application for the mobile game Clash of Clans that
+helps clan leaders track and manage their members.
