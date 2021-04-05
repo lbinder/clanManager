@@ -22,6 +22,6 @@ class Members(Resource):
 
 
 if __name__=='__main__':
-    member_manager = Process(target=track_members)
-    member_manager.start()
+    # member_manager = Process(target=track_members)
+    # member_manager.start()
     application.run(debug=True)

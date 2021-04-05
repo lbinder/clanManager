@@ -13,10 +13,10 @@ def track_members():
     """
     members_tracked = db.get_members_table()
     tags_in_db = parse_tags(members_tracked)
-    
+
     while True:
-        time.sleep(10)
         tags_in_db = update_members(tags_in_db)
+        time.sleep(600)
 
 
 def update_members(tags_in_db):
