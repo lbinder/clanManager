@@ -6,7 +6,6 @@ from multiprocessing import Process
 from database.database import Database
 from trackers.trackMembers import track_members
 
-db = Database()
 
 application = Flask(__name__)
 api = Api(application,
@@ -18,7 +17,10 @@ api = Api(application,
 @api.route('/members')
 class Members(Resource):
     def get(self):
-        return db.get_members_table()
+        db = Database()
+        members = db.get_members_table()
+        db.close_connection()
+        return members
 
 
 if __name__=='__main__':

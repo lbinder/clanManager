@@ -19,6 +19,10 @@ class Database:
             else:
                 print(e)
     
+    
+    def close_connection(self):
+        self.connection.close()
+
 
     def run_query_for_results(self, query):
         """ Runs a query

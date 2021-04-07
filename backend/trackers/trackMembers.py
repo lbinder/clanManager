@@ -9,13 +9,11 @@ db = Database()
 
 
 def track_members():
-    """Checks to see if new members should be added or removed every 10 seconds
+    """Checks to see if new members should be added or removed every 10 minutes
     """
-    members_tracked = db.get_members_table()
-    tags_in_db = parse_tags(members_tracked)
-
     while True:
-        tags_in_db = update_members(tags_in_db)
+        tags_in_db = parse_tags(db.get_members_table())
+        update_members(tags_in_db)
         time.sleep(600)
 
 
@@ -31,14 +29,13 @@ def update_members(tags_in_db):
     
     for member in current_members['items']:
         current_tags.append(member['tag'])
-        add_members(member, tags_in_db)
+        add_new_members(member, tags_in_db)
 
-    current_tags = delete_members(current_tags, tags_in_db)
+    delete_members(current_tags, tags_in_db)
     
-    return current_tags
 
 
-def add_members(member, tags_in_db):
+def add_new_members(member, tags_in_db):
     """Adds a member to the database if they are not currently in it
     Args:
         member: a player to add to the database
@@ -46,7 +43,7 @@ def add_members(member, tags_in_db):
     Returns:
         an updated list of tags that reflect any changes made to the database
     """
-    if (len(tags_in_db) == 0 or member['tag'] not in tags_in_db):
+    if (member['tag'] not in tags_in_db):
             values = [member['tag'], member['name'], date.today()]
             db.insert_into_members(values)
 
@@ -59,16 +56,9 @@ def delete_members(current_tags, tags_in_db):
     Returns:
         an updated list of tags that reflect any changes made to the database
     """
-    updated_tags = []
-
     for tag in tags_in_db:
         if (tag not in current_tags):
-            print(tag)
             db.delete_from_members(tag)
-        else:
-            updated_tags.append(tag)
-
-    return updated_tags
 
 
 def parse_tags(members):
