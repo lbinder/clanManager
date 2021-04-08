@@ -65,7 +65,7 @@ class Database:
         mysql.connector.Error: if the member cannot be added to the member table
 
         """
-        query = "INSERT INTO members (tag, name, date) VALUES (%s, %s, %s)"
+        query = "INSERT IGNORE INTO members (tag, name, date) VALUES (%s, %s, %s)"
         try:
             self.run_query(query, values)
         except mysql.connector.Error as e:
