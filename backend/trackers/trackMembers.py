@@ -7,7 +7,6 @@ from database.database import Database
 
 db = Database()
 
-
 def track_members():
     """Checks to see if new members should be added or removed every 10 minutes
     """
@@ -44,8 +43,8 @@ def add_new_members(member, tags_in_db):
         an updated list of tags that reflect any changes made to the database
     """
     if (member['tag'] not in tags_in_db):
-            values = [member['tag'], member['name'], date.today()]
-            db.insert_into_members(values)
+        values = [member['tag'], member['name'], date.today()]
+        db.insert_into_members(values)
 
 
 def delete_members(current_tags, tags_in_db):
