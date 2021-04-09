@@ -5,18 +5,18 @@ from datetime import date
 from database.database import Database
 
 
-db = Database()
-
 def track_members():
     """Checks to see if new members should be added or removed every 10 minutes
     """
     while True:
+        db = Database()
         tags_in_db = parse_tags(db.get_members_table())
-        update_members(tags_in_db)
+        update_members(tags_in_db, db)
+        db.close_connection()
         time.sleep(600)
 
 
-def update_members(tags_in_db):
+def update_members(tags_in_db, db):
     """Updates the database with members that are in the clan
     Args:
         tags_in_db: the tags of the players that are currently in the database
@@ -28,26 +28,14 @@ def update_members(tags_in_db):
     
     for member in current_members['items']:
         current_tags.append(member['tag'])
-        add_new_members(member, tags_in_db)
+        if (not db.member_exists(member['tag'])):
+            values = [member['tag'], member['name'], date.today()]
+            db.insert_into_members(values)
 
-    delete_members(current_tags, tags_in_db)
+    delete_members(current_tags, tags_in_db, db)
     
 
-
-def add_new_members(member, tags_in_db):
-    """Adds a member to the database if they are not currently in it
-    Args:
-        member: a player to add to the database
-        tags_in_db: the tags of the players that are currently in the database
-    Returns:
-        an updated list of tags that reflect any changes made to the database
-    """
-    if (member['tag'] not in tags_in_db):
-        values = [member['tag'], member['name'], date.today()]
-        db.insert_into_members(values)
-
-
-def delete_members(current_tags, tags_in_db):
+def delete_members(current_tags, tags_in_db, db):
     """Deletes a member from the database if they are no longer in the clan
     Args:
         current_tags: tags of players that are currently in the clan
