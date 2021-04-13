@@ -34,7 +34,12 @@ class Count(Resource):
         return count
 
 
-if __name__=='__main__':
-    # member_manager = Process(target=track_members)
-    # member_manager.start()
+def main():
+    member_manager = Process(target=track_members)
+    member_manager.daemon=True
+    member_manager.start()
     application.run(debug=True)
+
+
+if __name__=='__main__':
+    main()

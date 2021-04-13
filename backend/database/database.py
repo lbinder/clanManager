@@ -108,7 +108,7 @@ class Database:
             tag: identifies a member 
         """
         query = "SELECT COUNT(1) FROM members WHERE tag = '" + tag + "' limit 1"
-        return self.run_query_for_results(query)
+        return self.run_query_for_results(query)[0][0]
 
 
     def insert_into_wars(self, values):

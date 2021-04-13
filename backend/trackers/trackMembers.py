@@ -1,5 +1,5 @@
 import time
-
+import os
 from clashOfClansApi import getClashData
 from datetime import date
 from database.database import Database
@@ -25,7 +25,6 @@ def update_members(tags_in_db, db):
     """
     current_members = getClashData.get_clan_members()
     current_tags = []
-    
     for member in current_members['items']:
         current_tags.append(member['tag'])
         if (not db.member_exists(member['tag'])):
