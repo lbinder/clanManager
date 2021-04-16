@@ -1,5 +1,4 @@
 import time
-import os
 from clashOfClansApi import getClashData
 from datetime import date
 from database.database import Database
