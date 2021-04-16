@@ -19,6 +19,10 @@ class Database:
             else:
                 print(e)
     
+    
+    def close_connection(self):
+        self.connection.close()
+
 
     def run_query_for_results(self, query):
         """ Runs a query
@@ -54,14 +58,14 @@ class Database:
     def insert_into_members(self, values):
         """Adds a new member into the members table
         Args:
-            values: contains the players tag, name, and the date they joined (current date)
+            values: contains the member's tag, name, and the date they joined (current date)
         Returns:
             Nothing is returned
         Raises:
         mysql.connector.Error: if the member cannot be added to the member table
 
         """
-        query = "INSERT INTO members (tag, name, date) VALUES (%s, %s, %s)"
+        query = "INSERT IGNORE INTO members (tag, name, date) VALUES (%s, %s, %s)"
         try:
             self.run_query(query, values)
         except mysql.connector.Error as e:
@@ -69,12 +73,23 @@ class Database:
     
     
     def delete_from_members(self, tag):
+        """Deletes a member from the members table
+        """
         query = "DELETE FROM members WHERE tag = '" + tag + "'"
         try:
             self.run_query(query, None)
         except mysql.connector.Error as e:
             print(e)
 
+
+    def get_member_count(self):
+        """Find the amount of members in the clan
+        Returns:
+            The amount of members in the clan
+        """
+        query = "SELECT COUNT(*) FROM members"
+        return self.run_query_for_results(query)
+            
 
     def get_members_table(self):
         """Get the data stored in the members table
@@ -85,8 +100,19 @@ class Database:
         return self.run_query_for_results(query)
 
 
+    def member_exists(self, tag):
+        """Checks the members table to see if a row exists specified by the tag
+        Returns:
+            1 if the row exists and 0 otherwise
+        Args:
+            tag: identifies a member 
+        """
+        query = "SELECT COUNT(1) FROM members WHERE tag = '" + tag + "' limit 1"
+        return self.run_query_for_results(query)[0][0]
+
+
     def insert_into_wars(self, values):
-        """Adds a new row containing the war stats of a player into the wars table
+        """Adds a new row containing the war stats of a member into the wars table
         Args:
             values: contains a members attackId, name, and stats relating to their war performance
         Returns:
