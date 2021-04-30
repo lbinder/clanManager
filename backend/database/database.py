@@ -110,7 +110,7 @@ class Database:
         """
         query = "INSERT IGNORE INTO wars (tag) VALUES (%s)"
         try:
-            self.run_query(query, tag)
+            self.run_query(query, (tag,))
         except mysql.connector.Error as e:
             print(e)
 
@@ -147,7 +147,7 @@ class Database:
         Raises:
             mysql.connector.Error: if the member's stats cannot be accessed
         """
-        query = "SELECT * FROM war_stats WHERE tag LIKE '" + member_tag + "%'"
+        query = "SELECT * FROM war_stats WHERE id LIKE '" + member_tag + "%'"
         return self.run_query_for_results(query)
 
     def get_wars(self):

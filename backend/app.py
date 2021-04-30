@@ -1,12 +1,13 @@
 import sys
 
-from flask import Flask
+from flask import Flask, jsonify
 from flask_cors import CORS
 from flask_restplus import Resource, Api
 from multiprocessing import Process
 from database.database import Database
 from trackers.trackMembers import track_members
 from trackers.trackWars import manage_wars
+from warstats import members_war_stats
 
 
 application = Flask(__name__)
@@ -34,13 +35,10 @@ class Count(Resource):
         return count
 
 
-@api.route("/wars")
+@api.route("/wars_stats")
 class Wars(Resource):
     def get(self):
-        db = Database()
-        wars = db.get_wars()
-        return wars
-        db.close_connection()
+        return members_war_stats()
 
 
 def start_trackers():
@@ -54,7 +52,7 @@ def start_trackers():
 
 def main():
     start_trackers()
-    application.run(debug=True)
+    application.run(debug=True, port=8081)
 
 
 if __name__ == "__main__":

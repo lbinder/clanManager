@@ -12,7 +12,7 @@ def manage_wars():
     new_war = True
     while True:
         war = getClashData.get_current_war_information()
-        print(war["state"])
+
         if war["state"] == "preparation" and new_war:
             add_new_war(war, db)
             new_war = False
@@ -23,7 +23,7 @@ def manage_wars():
             time.sleep(10)
 
         new_war = True
-        time.sleep(10)
+        time.sleep(600)
 
 
 def add_new_war(war, db):
@@ -36,9 +36,10 @@ def add_new_war(war, db):
     members = war["clan"]["members"]
     enemy_tag = war["opponent"]["tag"]
     for member in members:
-        attacks_id = tag + enemy_tag
-        values = [tag + enemy_tag, member["name"], "F", None, None, "F", None, None]
+        attacks_id = member["tag"] + enemy_tag
+        values = [attacks_id, member["name"], "F", None, None, "F", None, None]
         db.insert_into_war_stats(values)
+    db.insert_into_wars(enemy_tag)
 
 
 def track_war(war, db):
